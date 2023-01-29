@@ -5,6 +5,15 @@ function HomeScreen() {
     return (
         <div className="homeScreen">
             <Nav />
+            <p>row</p>
+            <p>row</p>
+            <p>row</p>
+            <p>row</p>
+            <p>row</p>
+            <p>row</p>
+            <p>row</p>
+            <p>row</p>
+            <p>row</p>
         </div>   
     )
 }

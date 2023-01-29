@@ -4,6 +4,12 @@
     width: 100%;
 
     background: black;
+
+    transition: background 0.5s
+}
+
+.nav--transparent {
+    background: rgba(0, 0, 0, 0.1);
 }
 
 .nav__container {
