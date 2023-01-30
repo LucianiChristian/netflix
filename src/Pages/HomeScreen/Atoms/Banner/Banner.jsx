@@ -4,26 +4,24 @@ import { useEffect, useState } from "react";
 import requests from "../../../../API/requests";
 
 function Banner() {
-    const [ bannerMovie, setBannerMovie ] = useState({});
+    const [ bannerMovie, setBannerMovie ] = useState(null);
 
     useEffect(() => {
-        const move = fetch(requests.scienceFictionMovies)
+        fetch(requests.trendingTVMovies)
             .then(response => response.json())
-            .then(data => console.log(data));
+            .then(data => setBannerMovie(data.results[Math.floor(Math.random() * data.results.length)]));
     }, []);
 
     function clampDescription(description, length) {
-        return description.length > length ?
+        return description?.length > length ?
             description.slice(0, length - 3) + "..." :
             description;
     }
 
-    const testDescription = "An adaptation of a 1994 manga by Naoki Urasawa, Monster is a horror and psychological thriller anime that toys with the difficult themes of what it means to be human, if good and evil are within people from birth or if they are fostered over time, and how every action has a consequence that must be faced.";
-
     return (  
-        <header className="banner">
+        <header className="banner" style={ bannerMovie  ? {backgroundImage: `url("https://image.tmdb.org/t/p/original${bannerMovie?.backdrop_path}")`} : null }>
             <div className="banner__contents">
-                <h1 className="banner__title">Monster</h1>
+                <h1 className="banner__title">{bannerMovie?.title || bannerMovie?.name}</h1>
                 <div className="banner__buttons">
                     <button className="btn color-primary banner__button">
                         <i className="ri-play-fill icon-small"></i>
@@ -35,7 +33,7 @@ function Banner() {
                     </button>
                 </div>
                 <p className="banner__description">
-                    { clampDescription(testDescription, 150) }
+                    { clampDescription(bannerMovie?.overview, 150) }
                 </p>
             </div>
         </header>
