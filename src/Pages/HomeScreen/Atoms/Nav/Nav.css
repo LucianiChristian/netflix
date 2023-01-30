@@ -1,15 +1,16 @@
 .nav {
     position: fixed;
+    z-index: 100;
     top: 0;
     width: 100%;
 
     background: black;
 
-    transition: background 0.5s
+    transition: background 0.5s;
 }
 
 .nav--transparent {
-    background: rgba(0, 0, 0, 0.1);
+    background: transparent;
 }
 
 .nav__container {

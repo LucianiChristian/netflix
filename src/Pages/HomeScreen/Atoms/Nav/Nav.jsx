@@ -1,6 +1,6 @@
 import "./Nav.css";
-import logo from "./netflix-logo.png";
-import avatar from "./netflix-avatar.png";
+import logo from "../../assets/netflix-logo.png";
+import avatar from "../../assets/netflix-avatar.png";
 import { useEffect, useState } from "react";
 
 function Nav() {
@@ -8,10 +8,10 @@ function Nav() {
 
     function transitionNavBar() {
         if(window.scrollY > 0) {
-            setIsTransparent(true);
+            setIsTransparent(false);
         }
         else {
-            setIsTransparent(false);
+            setIsTransparent(true);
         }
     }
 
@@ -20,12 +20,12 @@ function Nav() {
     }, []);
 
     return (  
-        <div className={"nav" + (isTransparent ? " nav--transparent" : "")}>
+        <nav className={"nav" + (isTransparent ? " nav--transparent" : "")}>
             <div className="nav__container">
                 <img className="nav__logo" src={ logo } alt="logo" />
                 <img className="nav__avatar" src={ avatar } alt="userAvatar" />
             </div>
-        </div>
+        </nav>
     );
 }
 

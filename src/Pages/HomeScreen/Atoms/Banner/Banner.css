@@ -1,0 +1,57 @@
+.banner {
+    background-image: url(../../assets/monster.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    position: absolute;
+    z-index: 0;
+    top: 0;
+
+    width: 100%;
+    height: 40vw;
+}
+
+.banner__contents {
+    position: absolute;
+    bottom: 15%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 10px;
+    width: 40%;
+    padding: 0px 2vw;
+
+    color: white;
+}
+
+.banner__title {
+    font-size: var(--font-size-lrg);
+}
+
+.banner__buttons {
+    display: flex;
+    gap: 10px;
+
+    height:  auto;
+    width: 50vw;
+}
+
+.banner__button { 
+    padding: 0.4em 1.4em 0.4em 1em !important;
+
+    font-size: var(--font-size-med);
+}
+
+.banner__button.color-primary:hover {
+    background-color: rgba(255, 255, 255, 0.75);
+}
+
+.banner__button.color-secondary:hover {
+    background-color: rgba(109, 109, 110, 0.45);
+}
+
+.banner__description {
+    font-size: var(--font-size-sml);
+}
