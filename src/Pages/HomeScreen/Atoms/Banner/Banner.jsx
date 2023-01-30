@@ -1,15 +1,23 @@
 import "./Banner.css";
 import "../../../../utils.css";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import requests from "../../../../API/requests";
 
 function Banner() {
     const [ bannerMovie, setBannerMovie ] = useState(null);
 
-    useEffect(() => {
+    function fetchBannerMovie() {
         fetch(requests.trendingTVMovies)
             .then(response => response.json())
             .then(data => setBannerMovie(data.results[Math.floor(Math.random() * data.results.length)]));
+    }
+
+    const intervalRef = useRef(null);
+
+    useEffect(() => {
+        intervalRef.current = setInterval(fetchBannerMovie, 10000);
+
+        return () => clearInterval(intervalRef.current);
     }, []);
 
     function clampDescription(description, length) {
