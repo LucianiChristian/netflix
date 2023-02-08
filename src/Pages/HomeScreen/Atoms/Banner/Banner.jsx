@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import requests from "../../../../API/requests";
 
 function Banner() {
-    const [ bannerMovie, setBannerMovie ] = useState(null);
+    const [ bannerMovie, setBannerMovie ] = useState();
 
     function fetchBannerMovie() {
         fetch(requests.trendingTVMovies)
@@ -15,6 +15,8 @@ function Banner() {
     const intervalRef = useRef(null);
 
     useEffect(() => {
+        fetchBannerMovie();
+
         intervalRef.current = setInterval(fetchBannerMovie, 10000);
 
         return () => clearInterval(intervalRef.current);
@@ -27,7 +29,7 @@ function Banner() {
     }
 
     return (  
-        <header className="banner" style={ bannerMovie  ? {backgroundImage: `url("https://image.tmdb.org/t/p/original${bannerMovie?.backdrop_path}")`} : null }>
+        <header className="banner" style={ bannerMovie ? {backgroundImage: `url("https://image.tmdb.org/t/p/original${bannerMovie.backdrop_path}")`} : null }>
             <div className="banner__contents">
                 <h1 className="banner__title">{bannerMovie?.title || bannerMovie?.name}</h1>
                 <div className="banner__buttons">
