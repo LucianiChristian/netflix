@@ -10,7 +10,7 @@ function Row({ url }) {
             .then(data => setItems(data.results.filter(movie => movie.backdrop_path).slice(0, 5)));
     }, [])
 
-    const images = items?.map(item => <img src={`https://image.tmdb.org/t/p/original${item.backdrop_path}`}/>);
+    const images = items?.map(item => <img key={item.id} src={`https://image.tmdb.org/t/p/original${item.backdrop_path}`}/>);
 
     return ( 
         <div className="row">
