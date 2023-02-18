@@ -89,3 +89,19 @@
     background-color: var(--red);
     color: white;
 }
+
+.login__signUp {
+    margin-top: 16px;
+
+    font-size: 1.2rem;
+
+    color: #737373;
+}
+
+.login__signUp > a {
+    color: white;
+}
+
+.login__signUp > a:hover {
+    border-bottom: 2px solid white;
+}

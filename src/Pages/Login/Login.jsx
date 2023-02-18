@@ -22,6 +22,9 @@ function Login() {
                         <input type="password" placeholder="Password"/>
                         <button className="btn">Sign In</button>
                     </form>
+                    <p className="login__signUp">
+                        New to Netflix? <Link to="/">Sign Up Now.</Link>
+                    </p>
                 </main>
             </div>
         </div>
