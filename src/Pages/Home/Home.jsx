@@ -1,14 +1,14 @@
-import "./HomeScreen.css";
+import "./Home.css";
 import Nav from "./Atoms/Nav/Nav";
 import Banner from "./Atoms/Banner/Banner";
 import Row from "./Atoms/Row/Row";
 import requests from "../../API/requests";
 
-function HomeScreen() {
+function Home() {
     const urls = Object.values(requests);
 
     return (
-        <div className="homeScreen">
+        <div className="home">
             <Nav />
             <Banner />
             { urls.map(url => <Row key={ url } url={ url } />) }
@@ -16,4 +16,4 @@ function HomeScreen() {
     )
 }
 
-export default HomeScreen;
+export default Home;
