@@ -20,4 +20,10 @@ a {
 
 button {
     font-family: inherit;
+    border: none;
+}
+
+input {
+    border: none;
+    outline: none;
 }
