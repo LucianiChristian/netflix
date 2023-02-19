@@ -12,7 +12,7 @@ function Login() {
 
         signInWithEmailAndPassword(auth, emailRef.current.value, passwordRef.current.value)
             .then(userCredential => console.log(userCredential))
-            .catch(err => console.log(err));
+            .catch(err => alert(err));
     }
 
     return (  

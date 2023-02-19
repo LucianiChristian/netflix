@@ -12,7 +12,7 @@ function SignUp() {
 
         createUserWithEmailAndPassword(auth, emailRef.current.value, passwordRef.current.value)
             .then(userCredential => console.log(userCredential))
-            .catch(err => console.log(err));
+            .catch(err => alert(err));
     }
 
     return (  
