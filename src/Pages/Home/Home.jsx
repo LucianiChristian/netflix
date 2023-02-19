@@ -1,13 +1,17 @@
 import "./Home.css";
 import netflixLogo from "./assets/netflix-logo.png";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useRef } from "react";
 
 function Home() {
     const navigate = useNavigate();
 
+    const emailRef = useRef(null);
+
     function handleSubmit(e) {
         e.preventDefault();
-        navigate("/login");
+
+        navigate("/signUp");
     }
 
     return (  
@@ -28,7 +32,7 @@ function Home() {
                     <form className="home__form" onSubmit={ handleSubmit }>
                         <h3>Ready to watch? Enter your email to create or restart your membership.</h3>
                         <div className="formControl">
-                            <input type="email" required/>
+                            <input ref={ emailRef } type="email" required/>
                             <button>
                                 Get Started <i className="ri-arrow-right-s-line"></i>
                             </button>
