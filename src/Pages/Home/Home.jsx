@@ -2,27 +2,25 @@ import "./Home.css";
 import netflixLogo from "./assets/netflix-logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../../firebase";
+import { useSelector } from "react-redux";
 
 function Home() {
     const navigate = useNavigate();
+
     const emailRef = useRef(null);
     function handleSubmit(e) {
         e.preventDefault();
-
+        
         navigate("/signUp");
     }
+    
+    const user = useSelector(state => state.user.user);
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, user => {
-            if(user) {
-                navigate("/browse");
-            }
-        })
-
-        return unsubscribe;
-    }, []);
+        if(user) {
+            navigate("/browse");
+        }
+    })
 
     return (  
         <div className="homeContainer">

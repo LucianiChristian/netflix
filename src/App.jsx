@@ -3,9 +3,29 @@ import './App.css';
 import Browse from './Pages/Browse/Browse';
 import Home from './Pages/Home/Home';
 import Entrance from './Pages/Entrance/Entrance';
-import SignUp from './Pages/Entrance/components/SignUp';
+import { useEffect, useRef } from 'react';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { auth } from './firebase';
+import { useDispatch } from 'react-redux';
+import { login, logout } from './redux/userSlice';
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    onAuthStateChanged(auth, user => {
+      if(user) {
+        dispatch(login({
+          uid: user.uid,
+          email: user.email,
+        }));
+      }
+      else {
+        dispatch(logout());
+      }
+    })
+  }, [])
+
   return (
     <BrowserRouter>
       <div className="app">

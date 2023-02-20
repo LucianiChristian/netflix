@@ -1,6 +1,7 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { useRef } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../../firebase";
 
 function Login() {
@@ -10,10 +11,17 @@ function Login() {
     function handleSubmit(e) {
         e.preventDefault();
 
-        signInWithEmailAndPassword(auth, emailRef.current.value, passwordRef.current.value)
-            .then(userCredential => console.log(userCredential))
-            .catch(err => alert(err));
+        signInWithEmailAndPassword(auth, emailRef.current.value, passwordRef.current.value);
     }
+
+    const user = useSelector(state => state.user.user);
+
+    const navigate = useNavigate();
+    useEffect(() => {
+        if(user) {
+            navigate("/browse");
+        }
+    })
 
     return (  
         <>
