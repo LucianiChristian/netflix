@@ -1,0 +1,13 @@
+.profile__subscriptionOption {
+    display: flex;
+    justify-content: space-between;
+}
+
+.profile__subscriptionOption > button {
+    background-color: red;
+    color: white;
+}
+
+.profile__subscriptionOption > button.active {
+    background-color: grey;
+}

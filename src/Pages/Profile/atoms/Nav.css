@@ -1,0 +1,29 @@
+.profile .nav {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    width: 100%;
+
+    background: black;
+
+    transition: background 0.5s;
+}
+
+.profile .nav__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 2vh calc(12px + 2vw);
+}
+
+.profile .nav__logo {
+    width: calc(50px + 4vw);
+    cursor: pointer;    
+}
+
+.profile .nav__avatar {
+    width: calc(30px + 1vw);
+    border-radius: 6px;
+    cursor: pointer;
+}

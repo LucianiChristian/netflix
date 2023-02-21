@@ -4,7 +4,7 @@ import Banner from "./Atoms/Banner/Banner";
 import Row from "./Atoms/Row/Row";
 import requests from "../../API/requests";
 import { useSelector } from "react-redux";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 function Browse() {
@@ -12,10 +12,10 @@ function Browse() {
 
     const user = useSelector(state => state.user.user);
 
-    const navigate = useNavigate();
-    useEffect(() => {
-        if(!user) navigate("/");
-    })
+    // const navigate = useNavigate();
+    // useEffect(() => {
+    //     if(!user) navigate("/");
+    // })
 
     return (
         <div className="browse">

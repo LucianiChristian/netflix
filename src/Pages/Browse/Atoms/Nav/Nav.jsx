@@ -2,12 +2,14 @@ import "./Nav.css";
 import logo from "../../assets/netflix-logo.png";
 import avatar from "../../assets/netflix-avatar.png";
 import { useEffect, useState } from "react";
-import { signOut } from "firebase/auth";
-import { auth } from "../../../../firebase";
+import { useNavigate } from "react-router-dom";
+
 
 function Nav() {
+    const navigate = useNavigate();
+
     function handleClick() {
-        signOut(auth).catch(err => console.log(err));
+        navigate("/profile");
     }
 
     const [ isTransparent, setIsTransparent ] = useState(true);
