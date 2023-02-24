@@ -10,22 +10,32 @@ export default function Plans() {
         async function getPlans() {
             const plans = await getDocs(collection(db, "products"));
 
-            const reducedPlans = plans.docs.reduce((accu, doc) => {
-                accu.push(doc.data());
+            // map each plan into its data and price
+            const reducedPlansAlt = await Promise.all(plans.docs.map(async (plan) => {
+                const priceCollection = await getDocs(collection(plan.ref, "prices"));
                 
-                return accu;
-            }, []);
+                const price = priceCollection.docs[0].id;
+                
+                const planObj = {
+                    data: plan.data(),
+                    price,
+                };
 
-            setPlans(reducedPlans);
+                return planObj;
+            }));
+
+            setPlans(reducedPlansAlt);
         }
             
         getPlans();
     }, []);
 
+    console.log(plans)
+
     return (
         <ul className="profile__subscriptionOptions">
             { plans && 
-                plans.map(plan => <SubscriptionItem key={ plan.name } type={ plan.name } details={ plan.description } />)
+                plans.map(plan => <SubscriptionItem key={ plan.data.name } type={ plan.data.name } details={ plan.data.description } price={ plan.price }/>)
             }
         </ul>
     )
