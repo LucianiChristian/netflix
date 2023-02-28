@@ -3,7 +3,6 @@ import { getFirestore } from "firebase/firestore";
 import { getAuth } from 'firebase/auth';
 import { getFunctions } from 'firebase/functions';
 
-
 const firebaseConfig = {
   apiKey: "AIzaSyCL4Q9urj0fANTLAkvyAWOX2b3pH-hHKi8",
   authDomain: "netflix-8f97d.firebaseapp.com",

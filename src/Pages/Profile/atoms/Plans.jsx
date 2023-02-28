@@ -1,6 +1,6 @@
 import "./Plans.css";
-import { addDoc, collection, doc, getDoc, getDocs, onSnapshot, query, setDoc, where } from "firebase/firestore";
-import { useState, useEffect, useRef } from "react";
+import { addDoc, collection, getDocs, onSnapshot } from "firebase/firestore";
+import { useState, useEffect } from "react";
 import { db, functions } from "../../../firebase";
 import { useSelector } from "react-redux";
 import { httpsCallable } from "firebase/functions";
@@ -34,44 +34,47 @@ export default function Plans() {
 
     const currentUser = useSelector(state => state.user.user);
 
-    // create ref for document reference
-    const checkoutColRef = useRef(null);
-    useEffect(() => {
-        checkoutColRef.current = collection(db, `customers/${currentUser.uid}/checkout_sessions`);
-    }, []);
-
     async function handleClick(price) {    
         if(currentUser.subscription) {
-            const createPortalLink = httpsCallable(functions, 'ext-firestore-stripe-payments-createPortalLink');
-            const { data } = await createPortalLink({
-                returnUrl: window.location.origin,
-                locale: "auto",
-              });
-            
-            window.location.assign(data.url);
-        }        
-        else {
-            const docRef = await addDoc(checkoutColRef.current, {
-                price: price,
-                success_url: window.location.origin,
-                cancel_url: window.location.origin,
-            });
-    
-            const unsubscribe = onSnapshot(docRef, 
-                (snap) => {
-                    const { url } = snap.data();
-                    
-                    if(url) {
-                        window.location.assign(url);
-                        unsubscribe();
-                    }
-                },
-                (error) => {
-                    alert(error);
-                }
-            )
-
+            redirectToPortal();
         }
+        else {
+            redirectToCheckout(price);
+        }
+    }
+
+    async function redirectToPortal() {
+        const createPortalLink = httpsCallable(functions, 'ext-firestore-stripe-payments-createPortalLink');
+        
+        const { data } = await createPortalLink({
+            returnUrl: window.location.origin,
+            locale: "auto",
+            });
+        
+        window.location.assign(data.url);
+    }
+
+    async function redirectToCheckout(price) {
+        const checkoutCollection = collection(db, `customers/${currentUser.uid}/checkout_sessions`);
+        const docRef = await addDoc(checkoutCollection, {
+            price: price,
+            success_url: window.location.origin,
+            cancel_url: window.location.origin,
+        });
+
+        const unsubscribe = onSnapshot(docRef, 
+            (snap) => {
+                const { url } = snap.data();
+                
+                if(url) {
+                    window.location.assign(url);
+                    unsubscribe();
+                }
+            },
+            (error) => {
+                alert(error);
+            }
+        )
     }
 
     return (
