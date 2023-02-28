@@ -24,6 +24,10 @@ button {
     cursor: pointer;
 }
 
+button:disabled {
+    cursor: default;
+}
+
 input {
     border: none;
     outline: none;

@@ -8,14 +8,16 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
-
-
 function Profile() {
     function handleClick() {
         signOut(auth).catch(err => console.log(err));
     }
 
     const user = useSelector(state => state.user.user);
+    const email = user?.email;
+    const formattedPlan = user.subscription ? 
+        user?.subscription.plan[0].toUpperCase() + user?.subscription.plan.slice(1) :
+        "Unsubscribed";
 
     const navigate = useNavigate();
     useEffect(() => {
@@ -31,10 +33,10 @@ function Profile() {
                     <img src={avatarImage} alt="" />
                 </aside>
                 <section className="profile__content">
-                    <p className="profile__email">email_goesHere@placeholder.com</p>
-                    <h2 className="profile__plan">Plans (Current Plan: ??)</h2>
-                    <p className="profile__renewalDate">Renewal date: 00/00/0000</p>
-                    <Plans />
+                    <p className="profile__email">{ email }</p>
+                    <h2 className="profile__plan">Plans (Current Plan: { formattedPlan })</h2>
+                    <p className="profile__renewalDate">Renewal date: { user?.subscription?.endDate }</p>
+                    <Plans activePlan={ user?.subscription?.plan } />
                     <button className="profile__signOut" onClick={ handleClick }>Sign out</button>
                 </section>
             </main>

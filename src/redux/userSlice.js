@@ -20,7 +20,18 @@ function loginAsync(uid, email) {
         
         const activeSubscriptionsResult = [];
         
-        docs.forEach(doc => activeSubscriptionsResult.push(doc.data().role));
+        docs.forEach(doc => {
+            const data = doc.data();
+
+            const startDate = new Date(data.current_period_start.seconds * 1000).toLocaleDateString();
+            const endDate = new Date(data.current_period_end.seconds * 1000).toLocaleDateString();
+
+            activeSubscriptionsResult.push({
+                plan: data.role,
+                startDate,
+                endDate,
+            })}
+        );
 
         dispatch(login({
             uid: uid,

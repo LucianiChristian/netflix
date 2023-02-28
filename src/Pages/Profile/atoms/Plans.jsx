@@ -5,7 +5,7 @@ import { db, functions } from "../../../firebase";
 import { useSelector } from "react-redux";
 import { httpsCallable } from "firebase/functions";
 
-export default function Plans() {
+export default function Plans({ activePlan }) {
     const [ plans, setPlans ] = useState(null);
 
     useEffect(() => {
@@ -84,7 +84,8 @@ export default function Plans() {
                     plan => 
                         <SubscriptionItem 
                             key={ plan.data.name } 
-                            type={ plan.data.name } 
+                            type={ plan.data.name }
+                            isActive={ activePlan === plan.data.role} 
                             details={ plan.data.description } 
                             price={ plan.price }
                             onClick={ handleClick }
@@ -94,7 +95,7 @@ export default function Plans() {
     )
 }
 
-function SubscriptionItem({ type, details, isActive = false, price, onClick }) {
+function SubscriptionItem({ type, details, isActive, price, onClick }) {
     return (  
         <li className="profile__subscriptionOption">
             <div className="content">
@@ -103,7 +104,8 @@ function SubscriptionItem({ type, details, isActive = false, price, onClick }) {
             </div>
             <button 
                 onClick={ () => onClick(price) }
-                className={ isActive ? "active" : "" }>
+                className={ isActive ? "active" : "" }
+                disabled={ isActive }>
                 { isActive ? "Current Package" : "Subscribe" }
             </button>
         </li>

@@ -11,7 +11,9 @@ function Home() {
     function handleSubmit(e) {
         e.preventDefault();
         
-        navigate("/signUp");
+        navigate("/signUp", {
+            state: emailRef.current.value,
+        });
     }
     
     const user = useSelector(state => state.user.user);

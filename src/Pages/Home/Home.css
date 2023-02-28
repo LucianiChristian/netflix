@@ -90,6 +90,8 @@
 
 .formControl > input {
     flex: 3;
+    font-size: 1.2rem;
+    padding: 20px;
 }
 
 .formControl > button {
