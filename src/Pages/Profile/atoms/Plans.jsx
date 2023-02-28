@@ -1,7 +1,9 @@
 import "./Plans.css";
-import { collection, getDocs } from "firebase/firestore";
-import { useState, useEffect } from "react";
-import { db } from "../../../firebase";
+import { addDoc, collection, doc, getDoc, getDocs, onSnapshot, query, setDoc, where } from "firebase/firestore";
+import { useState, useEffect, useRef } from "react";
+import { db, functions } from "../../../firebase";
+import { useSelector } from "react-redux";
+import { httpsCallable } from "firebase/functions";
 
 export default function Plans() {
     const [ plans, setPlans ] = useState(null);
@@ -30,25 +32,75 @@ export default function Plans() {
         getPlans();
     }, []);
 
-    console.log(plans)
+    const currentUser = useSelector(state => state.user.user);
+
+    // create ref for document reference
+    const checkoutColRef = useRef(null);
+    useEffect(() => {
+        checkoutColRef.current = collection(db, `customers/${currentUser.uid}/checkout_sessions`);
+    }, []);
+
+    async function handleClick(price) {    
+        if(currentUser.subscription) {
+            const createPortalLink = httpsCallable(functions, 'ext-firestore-stripe-payments-createPortalLink');
+            const { data } = await createPortalLink({
+                returnUrl: window.location.origin,
+                locale: "auto",
+              });
+            
+            window.location.assign(data.url);
+        }        
+        else {
+            const docRef = await addDoc(checkoutColRef.current, {
+                price: price,
+                success_url: window.location.origin,
+                cancel_url: window.location.origin,
+            });
+    
+            const unsubscribe = onSnapshot(docRef, 
+                (snap) => {
+                    const { url } = snap.data();
+                    
+                    if(url) {
+                        window.location.assign(url);
+                        unsubscribe();
+                    }
+                },
+                (error) => {
+                    alert(error);
+                }
+            )
+
+        }
+    }
 
     return (
         <ul className="profile__subscriptionOptions">
             { plans && 
-                plans.map(plan => <SubscriptionItem key={ plan.data.name } type={ plan.data.name } details={ plan.data.description } price={ plan.price }/>)
+                plans.map(
+                    plan => 
+                        <SubscriptionItem 
+                            key={ plan.data.name } 
+                            type={ plan.data.name } 
+                            details={ plan.data.description } 
+                            price={ plan.price }
+                            onClick={ handleClick }
+                        />)
             }
         </ul>
     )
 }
 
-function SubscriptionItem({type, details, isActive = false}) {
+function SubscriptionItem({ type, details, isActive = false, price, onClick }) {
     return (  
         <li className="profile__subscriptionOption">
             <div className="content">
-                <h3>{type}</h3>
-                <p>{details}</p>
+                <h3>{ type }</h3>
+                <p>{ details }</p>
             </div>
-            <button className={isActive ? "active" : ""}>
+            <button 
+                onClick={ () => onClick(price) }
+                className={ isActive ? "active" : "" }>
                 { isActive ? "Current Package" : "Subscribe" }
             </button>
         </li>

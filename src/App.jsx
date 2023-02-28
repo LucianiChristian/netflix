@@ -7,19 +7,30 @@ import { useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase';
 import { useDispatch } from 'react-redux';
-import { login, logout } from './redux/userSlice';
+import { login, loginAsync, logout } from './redux/userSlice';
 import Profile from './Pages/Profile/Profile';
 
 function App() {
   const dispatch = useDispatch();
 
+  // useEffect(() => {
+  //   onAuthStateChanged(auth, user => {
+  //     if(user) {
+  //       dispatch(login({
+  //         uid: user.uid,
+  //         email: user.email,
+  //       }));
+  //     }
+  //     else {
+  //       dispatch(logout());
+  //     }
+  //   })
+  // }, [])
+
   useEffect(() => {
     onAuthStateChanged(auth, user => {
       if(user) {
-        dispatch(login({
-          uid: user.uid,
-          email: user.email,
-        }));
+        dispatch(loginAsync(user.uid, user.email));
       }
       else {
         dispatch(logout());
