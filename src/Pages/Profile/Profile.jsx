@@ -15,7 +15,7 @@ function Profile() {
 
     const user = useSelector(state => state.user.user);
     const email = user?.email;
-    const formattedPlan = user.subscription ? 
+    const formattedPlan = user?.subscription ? 
         user?.subscription.plan[0].toUpperCase() + user?.subscription.plan.slice(1) :
         "Unsubscribed";
 

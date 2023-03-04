@@ -1,7 +1,8 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../firebase";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function SignUp() {
     const emailRef = useRef(null);
@@ -10,6 +11,8 @@ function SignUp() {
 
     const prevEmail = useLocation().state;
 
+    const user = useSelector(state => state.user.user);
+
     function handleSubmit(e) {
         e.preventDefault();
 
@@ -17,6 +20,12 @@ function SignUp() {
             .then(navigate("/profile"))
             .catch(err => alert(err));
     }
+
+    useEffect(() => {
+        if(user) {
+            navigate("/browse");
+        }
+    })
 
     return (  
         <>

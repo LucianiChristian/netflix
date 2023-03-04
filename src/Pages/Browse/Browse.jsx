@@ -12,10 +12,10 @@ function Browse() {
 
     const user = useSelector(state => state.user.user);
 
-    // const navigate = useNavigate();
-    // useEffect(() => {
-    //     if(!user) navigate("/");
-    // })
+    const navigate = useNavigate();
+    useEffect(() => {
+        if(!user) navigate("/");
+    })
 
     return (
         <div className="browse">
