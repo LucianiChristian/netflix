@@ -1,5 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes, useNavigate } from 'react-router-dom';
-import './App.css';
+import './App.scss';
 import Browse from './Pages/Browse/Browse';
 import Home from './Pages/Home/Home';
 import Entrance from './Pages/Entrance/Entrance';
@@ -12,20 +12,6 @@ import Profile from './Pages/Profile/Profile';
 
 function App() {
   const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   onAuthStateChanged(auth, user => {
-  //     if(user) {
-  //       dispatch(login({
-  //         uid: user.uid,
-  //         email: user.email,
-  //       }));
-  //     }
-  //     else {
-  //       dispatch(logout());
-  //     }
-  //   })
-  // }, [])
 
   useEffect(() => {
     onAuthStateChanged(auth, user => {

@@ -1,5 +1,5 @@
 import "./Banner.css";
-import "../../../../utils.css";
+import "../../../../styles/utils.scss"
 import { useEffect, useRef, useState } from "react";
 import requests from "../../../../API/requests";
 

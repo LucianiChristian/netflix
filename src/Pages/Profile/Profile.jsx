@@ -1,4 +1,4 @@
-import "./Profile.css";
+import "./Profile.scss";
 import avatarImage from "./assets/netflix-avatar.png";
 import Nav from "./atoms/Nav";
 import Plans from "./atoms/Plans";
@@ -37,7 +37,7 @@ function Profile() {
                     <h2 className="profile__plan">Plans (Current Plan: { formattedPlan })</h2>
                     <p className="profile__renewalDate">Renewal date: { user?.subscription?.endDate }</p>
                     <Plans activePlan={ user?.subscription?.plan } />
-                    <button className="profile__signOut" onClick={ handleClick }>Sign out</button>
+                    <button className="btn btn-primary" onClick={ handleClick }>Sign out</button>
                 </section>
             </main>
         </div>

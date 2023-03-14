@@ -1,0 +1,34 @@
+:root {
+  --red:#e50914;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  font-size: inherit;
+}
+
+button {
+  font-family: inherit;
+  border: none;
+  cursor: pointer;
+
+  &:disabled {
+    cursor: default;
+  }
+}
+
+input {
+  border: none;
+  outline: none;
+}

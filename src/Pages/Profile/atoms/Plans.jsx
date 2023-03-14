@@ -1,4 +1,4 @@
-import "./Plans.css";
+import "./Plans.scss";
 import { addDoc, collection, getDocs, onSnapshot } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import { db, functions } from "../../../firebase";
@@ -104,7 +104,7 @@ function SubscriptionItem({ type, details, isActive, price, onClick }) {
             </div>
             <button 
                 onClick={ () => onClick(price) }
-                className={ isActive ? "active" : "" }
+                className={ isActive ? "btn-disabled" : "btn-primary" }
                 disabled={ isActive }>
                 { isActive ? "Current Package" : "Subscribe" }
             </button>
